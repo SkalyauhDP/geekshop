@@ -1,0 +1,20 @@
+[
+  {
+    "city": "Томск",
+    "phone": "+7-987-654-3210",
+    "email": "tmsk@geekshop.ru",
+    "address": "Далеко от МКАД"
+  },
+  {
+    "city": "Иркутск",
+    "phone": "+7-012-345-6789",
+    "email": "irktsk@geekshop.ru",
+    "address": "За пределами МКАД"
+  },
+  {
+    "city": "Курган",
+    "phone": "+7-123-456-7890",
+    "email": "krgn@geekshop.ru",
+    "address": "Не связано с МКАД"
+  }
+]
