@@ -19,18 +19,25 @@ def basket_add(request, pk):    #pk = product_pk
     if 'login' in request.META.get('HTTP_REFERER'):
         return HttpResponseRedirect(reverse('products:product', args=[pk]))
     product_item = get_object_or_404(Product, pk=pk)
-    basket_item = Basket.objects.filter(product=product_item, user=request.user).first()
-    if not basket_item:
+    basket_item = Basket.get_product(user=request.user, product=product_item)
+    # basket_item = Basket.objects.filter(product=product_item, user=request.user).first()
+    if basket_item:
         # basket_item = Basket.objects.create(product=product_item, user=request.user)
+        # basket_item = Basket(user=request.user, product=product_item)
+        basket_item[0].quantity += 1
+        basket_item[0].save()
+    else:
         basket_item = Basket(user=request.user, product=product_item)
+        basket_item.quantity += 1
+        basket_item.save()
 
     # if not basket_item.exists():
     #     basket_item = Basket(user=request.user, product=product_item)
 
-    basket_item = basket_item[:0]
-
-    basket_item.quantity += 1
-    basket_item.save()
+    # basket_item = basket_item[:0]
+    #
+    # basket_item.quantity += 1
+    # basket_item.save()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
