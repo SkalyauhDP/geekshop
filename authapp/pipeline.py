@@ -31,6 +31,8 @@ def save_user_profile(backend, user, response, *args, **kwargs):
         return
 
     data = resp.json()['response'][0]
+    print(data)
+
 
     if data['sex']:
         if data['sex'] == 2:
@@ -41,21 +43,26 @@ def save_user_profile(backend, user, response, *args, **kwargs):
     if data['about']:
         user.shopuserprofile.about_me = data['about']
 
-    if data['bdate']:
+    try:
+        print(data['bdate'])
         bdate = datetime.datetime.strptime(data['bdate'], '%d.%m.%Y').date()
 
         age = timezone.now().date().year - bdate.year
         if age < 18:
             user.delete()
             raise AuthForbidden('social_core.backends.vk.VKOAuth2')
+    except LookupError:
+        pass
 
-    if data['photo_400_orig']:
+    try:
+    # if data['photo_400_orig']:
         urllib.request.urlretrieve(
             data['photo_400_orig'],
             os.path.join(settings.MEDIA_ROOT, 'users_avatars', f'{user.pk}.jpg')
 
         )
         user.avatar = os.path.join('users_avatars', f'{user.pk}.jpg')
-
+    except LookupError:
+        pass
 
     user.save()
