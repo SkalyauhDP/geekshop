@@ -55,7 +55,7 @@ def user_create(request):
             user_form.save()
             return HttpResponseRedirect(reverse('admin:users'))
     else:
-        #user_form = ShopUserRegisterForm()
+        # user_form = ShopUserRegisterForm()
         user_form = ShopUserAdminEditForm()
 
     content = {
